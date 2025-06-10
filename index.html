@@ -7,66 +7,553 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
   <style>
-    /* All your CSS remains the same — no changes needed */
-    /* ... (unchanged CSS code from your original post) ... */
+    :root {
+      --primary: #6c5ce7;
+      --secondary: #a29bfe;
+      --accent: #fd79a8;
+      --dark: #2d3436;
+      --light: #f5f6fa;
+      --win: #00b894;
+      --draw: #fdcb6e;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      color: var(--dark);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 0;
+      position: relative;
+      z-index: 10;
+    }
+    
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .logo a {
+      color: inherit;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    
+    .logo a:hover {
+      color: var(--accent);
+    }
+    
+    .play-btn {
+      background: var(--primary);
+      color: white;
+      padding: 10px 25px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);
+    }
+    
+    .play-btn:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(253, 121, 168, 0.4);
+    }
+    
+    .hero {
+      text-align: center;
+      padding: 60px 0 80px;
+      position: relative;
+    }
+    
+    .hero h1 {
+      font-size: 3.5rem;
+      margin-bottom: 20px;
+      background: linear-gradient(to right, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1.2;
+    }
+    
+    .hero p {
+      font-size: 1.2rem;
+      color: var(--dark);
+      max-width: 700px;
+      margin: 0 auto 40px;
+      opacity: 0.9;
+    }
+    
+    .game-preview {
+      display: grid;
+      grid-template-columns: repeat(3, 100px);
+      grid-gap: 10px;
+      justify-content: center;
+      margin: 40px auto;
+      perspective: 1000px;
+    }
+    
+    .preview-cell {
+      width: 100px;
+      height: 100px;
+      background: white;
+      border-radius: 15px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 3rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transform-style: preserve-3d;
+    }
+    
+    .preview-cell:hover {
+      transform: translateY(-5px) rotateY(10deg);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+    
+    .preview-cell.x {
+      color: var(--primary);
+    }
+    
+    .preview-cell.o {
+      color: var(--accent);
+    }
+    
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      padding: 60px 0;
+    }
+    
+    .feature-card {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+      transition: all 0.3s ease;
+    }
+    
+    .feature-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+    }
+    
+    .feature-card i {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      background: linear-gradient(to right, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .feature-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      color: var(--primary);
+    }
+    
+    .feature-card p {
+      color: var(--dark);
+      opacity: 0.8;
+      line-height: 1.6;
+    }
+    
+    footer {
+      text-align: center;
+      padding: 30px 0;
+      margin-top: 60px;
+      border-top: 1px solid rgba(0,0,0,0.1);
+    }
+    
+    footer p {
+      margin-bottom: 10px;
+      color: var(--dark);
+      opacity: 0.8;
+    }
+    
+    footer a {
+      color: var(--primary);
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    
+    footer a:hover {
+      color: var(--accent);
+    }
+    
+    /* Animated background elements */
+    .bg-element {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.1;
+      z-index: -1;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      
+      .game-preview {
+        grid-template-columns: repeat(3, 80px);
+      }
+      
+      .preview-cell {
+        width: 80px;
+        height: 80px;
+        font-size: 2.5rem;
+      }
+      
+      .features {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    /* Animation classes */
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+    
+    .floating {
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    /* Game modes section */
+    .game-modes {
+      padding: 80px 0;
+      background: rgba(255,255,255,0.7);
+      border-radius: 20px;
+      margin: 40px 0;
+    }
+    
+    .game-modes h2 {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 50px;
+      color: var(--primary);
+    }
+    
+    .mode-cards {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 30px;
+    }
+    
+    .mode-card {
+      background: white;
+      border-radius: 15px;
+      padding: 30px;
+      width: 280px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+      transition: all 0.3s ease;
+    }
+    
+    .mode-card:hover {
+      transform: translateY(-10px) scale(1.03);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+    }
+    
+    .mode-card i {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      color: var(--primary);
+    }
+    
+    .mode-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      color: var(--dark);
+    }
+    
+    .mode-card p {
+      color: var(--dark);
+      opacity: 0.8;
+      margin-bottom: 20px;
+    }
+    
+    /* Testimonials */
+    .testimonials {
+      padding: 80px 0;
+    }
+    
+    .testimonials h2 {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 50px;
+      color: var(--primary);
+    }
+    
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+    }
+    
+    .testimonial-card {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    }
+    
+    .testimonial-text {
+      font-style: italic;
+      margin-bottom: 20px;
+      position: relative;
+    }
+    
+    .testimonial-text::before {
+      content: '"';
+      font-size: 4rem;
+      position: absolute;
+      top: -20px;
+      left: -15px;
+      color: var(--secondary);
+      opacity: 0.2;
+      font-family: serif;
+    }
+    
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+    }
+    
+    .author-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 15px;
+      color: white;
+      font-weight: bold;
+    }
+    
+    .author-info h4 {
+      color: var(--dark);
+      margin-bottom: 5px;
+    }
+    
+    .author-info p {
+      color: var(--dark);
+      opacity: 0.6;
+      font-size: 0.9rem;
+    }
+    
+    /* Stats section */
+    .stats {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      padding: 60px 0;
+      background: var(--primary);
+      border-radius: 20px;
+      margin: 60px 0;
+      color: white;
+    }
+    
+    .stat-item {
+      text-align: center;
+      padding: 20px;
+    }
+    
+    .stat-number {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    
+    .stat-label {
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <!-- ✅ FIXED: link now points to TTT.html -->
+    <!-- Background elements -->
+    <div class="bg-element" style="width: 300px; height: 300px; background: var(--accent); top: -100px; right: -100px;"></div>
+    <div class="bg-element" style="width: 200px; height: 200px; background: var(--primary); bottom: -50px; left: -50px;"></div>
+    
     <header>
       <div class="logo"><a href="index.html">Tik Tak Toe</a></div>
       <a href="TTT.html" class="play-btn">Play Now</a>
     </header>
 
     <div class="hero">
-      <h1>Challenge Your Mind</h1>
-      <p>Experience the classic game with stunning visuals, smooth animations, and exciting gameplay!</p>
+      <h1>Challenge Your Mind with Ultimate Tik Tak Toe</h1>
+      <p>Experience the classic game reimagined with stunning visuals, smooth animations, and exciting new gameplay modes that will test your strategic thinking!</p>
 
       <!-- Game Preview Grid -->
       <div class="game-preview">
-        <div class="preview-cell x">X</div>
-        <div class="preview-cell o">O</div>
-        <div class="preview-cell x">X</div>
-        <div class="preview-cell o">O</div>
-        <div class="preview-cell x">X</div>
-        <div class="preview-cell o">O</div>
-        <div class="preview-cell"></div>
-        <div class="preview-cell x">X</div>
-        <div class="preview-cell o">O</div>
+        <div class="preview-cell x floating" style="animation-delay: 0.1s">X</div>
+        <div class="preview-cell o floating" style="animation-delay: 0.2s">O</div>
+        <div class="preview-cell x floating" style="animation-delay: 0.3s">X</div>
+        <div class="preview-cell o floating" style="animation-delay: 0.4s">O</div>
+        <div class="preview-cell x floating" style="animation-delay: 0.5s">X</div>
+        <div class="preview-cell o floating" style="animation-delay: 0.6s">O</div>
+        <div class="preview-cell floating" style="animation-delay: 0.7s"></div>
+        <div class="preview-cell x floating" style="animation-delay: 0.8s">X</div>
+        <div class="preview-cell o floating" style="animation-delay: 0.9s">O</div>
       </div>
 
-      <!-- ✅ FIXED: link now points to TTT.html -->
-      <a href="TTT.html" class="play-btn">Start Playing</a>
+      <a href="TTT.html" class="play-btn">Start Playing for Free</a>
+    </div>
+
+    <div class="stats">
+      <div class="stat-item">
+        <div class="stat-number">500K+</div>
+        <div class="stat-label">Games Played</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">3</div>
+        <div class="stat-label">Game Modes</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">99.9%</div>
+        <div class="stat-label">Player Satisfaction</div>
+      </div>
     </div>
 
     <div class="features">
       <div class="feature-card">
         <i class="fas fa-trophy"></i>
         <h3>Win in Style</h3>
-        <p>Celebrate victories with confetti explosions and smooth animations.</p>
+        <p>Celebrate victories with spectacular confetti explosions, smooth animations, and satisfying sound effects that make every win memorable.</p>
       </div>
       <div class="feature-card">
         <i class="fas fa-paint-brush"></i>
         <h3>Beautiful Design</h3>
-        <p>Enjoy a visually stunning UI with dynamic background effects.</p>
+        <p>Enjoy a visually stunning UI with dynamic background effects, sleek transitions, and a modern color scheme that's easy on the eyes.</p>
       </div>
       <div class="feature-card">
         <i class="fas fa-mobile-alt"></i>
         <h3>Play Anywhere</h3>
-        <p>Fully responsive design works on desktop, tablet, and mobile.</p>
+        <p>Fully responsive design works perfectly on desktop, tablet, and mobile devices. Your game syncs across all platforms.</p>
       </div>
+    </div>
+
+    <div class="game-modes">
+      <h2>Exciting Game Modes</h2>
+      <div class="mode-cards">
+        <div class="mode-card">
+          <i class="fas fa-user-friends"></i>
+          <h3>Classic Duel</h3>
+          <p>Play against a friend in the traditional 3x3 grid. The first to get three in a row wins!</p>
+          <a href="TTT.html" class="play-btn" style="display: inline-block; padding: 8px 20px; font-size: 0.9rem;">Play</a>
+        </div>
+        <div class="mode-card">
+          <i class="fas fa-robot"></i>
+          <h3>AI Challenge</h3>
+          <p>Test your skills against our intelligent AI with multiple difficulty levels from beginner to expert.</p>
+          <a href="TTT.html" class="play-btn" style="display: inline-block; padding: 8px 20px; font-size: 0.9rem;">Play</a>
+        </div>
+        <div class="mode-card">
+          <i class="fas fa-expand"></i>
+          <h3>Ultimate Mode</h3>
+          <p>Advanced 9x9 grid where each move affects the opponent's options. For true strategists!</p>
+          <a href="TTT.html" class="play-btn" style="display: inline-block; padding: 8px 20px; font-size: 0.9rem;">Play</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonials">
+      <h2>What Players Say</h2>
+      <div class="testimonial-grid">
+        <div class="testimonial-card">
+          <div class="testimonial-text">
+            This is the most beautiful Tik Tak Toe game I've ever played! The animations are so satisfying and the AI actually provides a decent challenge.
+          </div>
+          <div class="testimonial-author">
+            <div class="author-avatar">JD</div>
+            <div class="author-info">
+              <h4>Jane Doe</h4>
+              <p>Strategy Game Enthusiast</p>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-text">
+            I play this with my kids every evening. The simple interface makes it easy for them to understand, while the advanced modes keep me engaged.
+          </div>
+          <div class="testimonial-author">
+            <div class="author-avatar">MS</div>
+            <div class="author-info">
+              <h4>Mike Smith</h4>
+              <p>Parent & Gamer</p>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-text">
+            As a UX designer, I appreciate the attention to detail in this game. Every interaction feels polished and intentional. Great work!
+          </div>
+          <div class="testimonial-author">
+            <div class="author-avatar">AJ</div>
+            <div class="author-info">
+              <h4>Anna Johnson</h4>
+              <p>UX Designer</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero" style="padding: 60px 0;">
+      <h2>Ready to Play?</h2>
+      <p style="margin-bottom: 30px;">Join thousands of players enjoying the ultimate Tik Tak Toe experience. No downloads required - play instantly in your browser!</p>
+      <a href="TTT.html" class="play-btn">Play Now for Free</a>
     </div>
 
     <footer>
       <p>© 2023 <a href="index.html">Tik Tak Toe</a> | Designed with ❤️ by <a href="https://github.com/adibhaihai/Tik-tak-toe" target="_blank">You</a></p>
-      <p>Need help? <a href="mailto:support@tiktaktoe.com">Contact Us</a></p>
+      <p>Need help? <a href="mailto:support@tiktaktoe.com">Contact Us</a> | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+      <div style="margin-top: 20px;">
+        <a href="#" style="margin: 0 10px; font-size: 1.2rem;"><i class="fab fa-twitter"></i></a>
+        <a href="#" style="margin: 0 10px; font-size: 1.2rem;"><i class="fab fa-facebook"></i></a>
+        <a href="#" style="margin: 0 10px; font-size: 1.2rem;"><i class="fab fa-instagram"></i></a>
+      </div>
     </footer>
   </div>
 
   <script>
-    // Scroll animation for feature cards
+    // Enhanced animations
     document.addEventListener('DOMContentLoaded', () => {
+      // Feature cards animation
       const featureCards = document.querySelectorAll('.feature-card');
       featureCards.forEach((card, index) => {
         card.style.opacity = '0';
@@ -77,6 +564,47 @@
           card.style.transform = 'translateY(0)';
         }, 300);
       });
+      
+      // Game preview cells animation on hover
+      const previewCells = document.querySelectorAll('.preview-cell');
+      previewCells.forEach(cell => {
+        cell.addEventListener('mouseenter', () => {
+          cell.style.transform = 'translateY(-10px) rotateY(20deg) scale(1.1)';
+        });
+        cell.addEventListener('mouseleave', () => {
+          cell.style.transform = 'translateY(0) rotateY(0) scale(1)';
+        });
+      });
+      
+      // Animate stats when they come into view
+      const statsSection = document.querySelector('.stats');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const statNumbers = document.querySelectorAll('.stat-number');
+            statNumbers.forEach((num, index) => {
+              const target = +num.innerText.replace(/[^0-9]/g, '');
+              const increment = target / 30;
+              let start = 0;
+              
+              const timer = setInterval(() => {
+                start += increment;
+                if (start >= target) {
+                  num.innerText = num.innerText.replace(/[0-9.]+/g, target);
+                  clearInterval(timer);
+                } else {
+                  num.innerText = num.innerText.replace(/[0-9.]+/g, Math.floor(start));
+                }
+              }, 30);
+            });
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.5 });
+      
+      if (statsSection) {
+        observer.observe(statsSection);
+      }
     });
   </script>
 </body>
