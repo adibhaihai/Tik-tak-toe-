@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tik Tak Toe - Colorful Edition</title>
+    <!-- Add AdMob script with your publisher ID -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1626882055522096" crossorigin="anonymous"></script>
     <style>
         body {
             margin: 0;
@@ -142,6 +144,7 @@
             align-items: center;
             justify-content: center;
             color: white;
+            overflow: hidden;
         }
 
         .confetti {
@@ -182,7 +185,7 @@
         </div>
         <button class="reset-btn" id="reset">Reset Game</button>
         <div class="ad-container" id="ad-container">
-            AdMob Ad Will Appear Here
+            <!-- Ad will be loaded here -->
         </div>
     </div>
 
@@ -211,6 +214,7 @@
                     cell.addEventListener('click', handleCellClick);
                 });
                 resetGame();
+                loadAd(); // Load ad when game starts
             }
             
             // Handle cell click
@@ -253,12 +257,14 @@
                     status.textContent = `Player ${currentPlayer.toUpperCase()} wins!`;
                     gameActive = false;
                     createConfetti();
+                    refreshAd(); // Refresh ad when someone wins
                     return;
                 }
                 
                 if (!gameState.includes('')) {
                     status.textContent = "Game ended in a draw!";
                     gameActive = false;
+                    refreshAd(); // Refresh ad on draw
                     return;
                 }
                 
@@ -296,39 +302,41 @@
                 }
             }
             
+            // Load AdMob ad
+            function loadAd() {
+                adContainer.innerHTML = '';
+                
+                // Create ad display element
+                const adDisplay = document.createElement('ins');
+                adDisplay.className = 'adsbygoogle';
+                adDisplay.style.display = 'block';
+                adDisplay.setAttribute('data-ad-client', 'ca-pub-1626882055522096');
+                adDisplay.setAttribute('data-ad-slot', '3976586609');
+                adDisplay.setAttribute('data-ad-format', 'auto');
+                adDisplay.setAttribute('data-full-width-responsive', 'true');
+                
+                // Create ad script
+                const adScript = document.createElement('script');
+                adScript.innerHTML = '(adsbygoogle = window.adsbygoogle || []).push({});';
+                
+                // Append elements to container
+                adContainer.appendChild(adDisplay);
+                adContainer.appendChild(adScript);
+            }
+            
+            // Refresh AdMob ad
+            function refreshAd() {
+                if (window.adsbygoogle) {
+                    // Only refresh if adsbygoogle is loaded
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                }
+            }
+            
             // Event listeners
             resetBtn.addEventListener('click', resetGame);
             
-            // Initialize AdMob (replace with your actual AdMob ID)
-            function initializeAdMob() {
-                // This is where you would initialize your AdMob ads
-                // For a real implementation, you would use the AdMob SDK
-                // Here's a placeholder for where you would put your AdMob code
-                
-                /*
-                // Sample AdMob initialization (this is just a placeholder)
-                const adMobConfig = {
-                    adUnitId: 'YOUR_ADMOB_AD_UNIT_ID',
-                    adSize: 'SMART_BANNER',
-                    position: 'BOTTOM_CENTER'
-                };
-                
-                // Initialize ads
-                window.admob.initialize(adMobConfig);
-                
-                // Show banner ad
-                window.admob.banner.show({
-                    id: adMobConfig.adUnitId
-                }).catch(console.error);
-                */
-                
-                // For now, we'll just display a placeholder
-                adContainer.textContent = "AdMob Ads Would Display Here";
-            }
-            
-            // Initialize the game and AdMob
+            // Initialize the game
             initGame();
-            initializeAdMob();
         });
     </script>
 </body>
